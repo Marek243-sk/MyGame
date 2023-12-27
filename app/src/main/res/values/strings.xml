@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyGame</string>
+    <string name="za_a_hru">\n</string>
+    <string name="sk_re" />
+    <string name="play">PLAY</string>
+    <string name="points">POINTS</string>
+</resources>
