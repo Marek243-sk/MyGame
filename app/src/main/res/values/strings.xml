@@ -4,4 +4,6 @@
     <string name="sk_re" />
     <string name="play">PLAY</string>
     <string name="points">POINTS</string>
+    <string name="points_details">Points earned in game.</string>
+
 </resources>

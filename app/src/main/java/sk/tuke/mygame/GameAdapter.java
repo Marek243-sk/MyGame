@@ -15,10 +15,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameHolder> {
 
     private List<GameModel> _data;
     private WeakReference<Context> _context;
+    private HandleClick _clickListener;
 
-    public GameAdapter(List<GameModel> data, WeakReference<Context> contextWeakReference) {
+    public GameAdapter(List<GameModel> data, WeakReference<Context> contextWeakReference, HandleClick clickListener) {
         _context = contextWeakReference;
         _data = data;
+        _clickListener = clickListener;
     }
 
     public void refreshData(List<GameModel> data) {
@@ -37,6 +39,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameHolder> {
         //holder.points.setText(_data.get(position).points);
         GameModel currentItem = _data.get(position);
         holder.points.setText(String.valueOf(currentItem.points));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int clickedPosition = holder.getAdapterPosition();
+                if (_clickListener != null) {
+                    _clickListener.onClick(clickedPosition);
+                }
+            }
+        });
     }
 
     @Override
