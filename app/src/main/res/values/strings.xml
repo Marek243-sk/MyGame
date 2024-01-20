@@ -6,5 +6,6 @@
     <string name="points">POINTS</string>
     <string name="points_details">Points earned in game.</string>
     <string name="textview">TextView</string>
+    <string name="api">API</string>
 
 </resources>

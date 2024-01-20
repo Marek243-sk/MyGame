@@ -32,5 +32,12 @@ public class First extends AppCompatActivity {
             Intent intent = new Intent(First.this, ScoreActivity.class);
             startActivity(intent);
         });
+
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button API_button = findViewById(R.id.API_button);
+
+        API_button.setOnClickListener(v -> {
+            Intent intent = new Intent(First.this, MainActivityAPI.class);
+            startActivity(intent);
+        });
     }
 }
