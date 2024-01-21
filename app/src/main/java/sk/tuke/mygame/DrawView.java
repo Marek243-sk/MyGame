@@ -1,5 +1,6 @@
 package sk.tuke.mygame;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.annotation.NonNull;
 
 import java.util.Random;
 
@@ -67,7 +70,7 @@ public class DrawView extends View {
         textPaint.setTextSize(TEXT_SIZE);
         textPaint.setTextAlign(Paint.Align.LEFT);
         healthPaint.setColor(Color.GREEN);
-        brickPaint.setColor(Color.argb(255, 249, 112, 42));
+        brickPaint.setColor(Color.argb(255, 33, 55, 255));
 
         Display display = ((Activity) getContext()).getWindowManager().getDefaultDisplay();
 
@@ -103,7 +106,7 @@ public class DrawView extends View {
         }
     }
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
 
         super.onDraw(canvas);
         canvas.drawColor(Color.BLACK);
@@ -188,6 +191,7 @@ public class DrawView extends View {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 

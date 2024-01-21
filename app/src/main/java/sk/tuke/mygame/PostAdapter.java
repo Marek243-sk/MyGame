@@ -1,5 +1,6 @@
 package sk.tuke.mygame;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,14 +29,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewholder
         return new PostViewholder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull PostViewholder holder, int position) {
 
         Post post = postList.get(position);
-        holder.userId.setText(post.getUserId());
-        holder.id.setText(post.getId());
-        holder.title.setText(post.getTitle());
-        holder.body.setText(post.getBody());
+        holder.userId.setText("user id: " + post.getUserId());
+        holder.id.setText("id: " + post.getId());
+        holder.title.setText("title: " + post.getTitle());
+        holder.body.setText("body: " + post.getBody());
     }
 
     @Override
