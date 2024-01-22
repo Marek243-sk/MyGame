@@ -1,13 +1,15 @@
 package sk.tuke.mygame;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.developer.gbuttons.GoogleSignInButton;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,9 +33,6 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private EditText emailLogin, passwordLogin;
-    private TextView toSignUp;
-    private Button buttonLogin;
-    TextView forgotPassword;
     GoogleSignInButton buttonGoogle;
     GoogleSignInOptions optionsGoogle;
     GoogleSignInClient clientGoogle;
@@ -41,9 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
         emailLogin = findViewById(R.id.email_login);
         passwordLogin = findViewById(R.id.password_login);
-        toSignUp = findViewById(R.id.to_signup);
-        buttonLogin = findViewById(R.id.button_login);
-        forgotPassword = findViewById(R.id.forgot_password);
+        TextView toSignUp = findViewById(R.id.to_signup);
+        Button buttonLogin = findViewById(R.id.button_login);
         buttonGoogle = findViewById(R.id.button_google);
         auth = FirebaseAuth.getInstance();
 
@@ -59,18 +61,18 @@ public class LoginActivity extends AppCompatActivity {
                         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                Toast.makeText(LoginActivity.this, "Successfully logged in.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, "Successfully logged in.", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this, First.class));
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(LoginActivity.this, "Failed to login.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginActivity.this, "Failed to login.", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        passwordLogin.setError("I would fill that in...");
+                        passwordLogin.setError("I would also fill that in...");
                     }
                 } else if (email.isEmpty()) {
                     emailLogin.setError("I would fill that in...");
@@ -87,11 +89,40 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
+        optionsGoogle = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        clientGoogle = GoogleSignIn.getClient(this, optionsGoogle);
+
+        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (googleSignInAccount != null) {
+            finish();
+            Intent intent = new Intent(LoginActivity.this, First.class);
+            startActivity(intent);
+        }
+
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult o) {
+                if (o.getResultCode() == Activity.RESULT_OK) {
+                    Intent intent = o.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+                    try {
+                        task.getResult(ApiException.class);
+                        finish();
+                        Intent intent1 = new Intent(LoginActivity.this, First.class);
+                        startActivity(intent1);
+                    } catch (ApiException e) {
+                        Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        });
+
+        buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                @SuppressLint("InflateParams") View viewDialog = getLayoutInflater().inflate(R.layout.forgot, null);
+                Intent intent = clientGoogle.getSignInIntent();
+                activityResultLauncher.launch(intent);
             }
         });
     }

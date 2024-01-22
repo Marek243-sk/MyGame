@@ -36,10 +36,10 @@
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/forgotTitle"
-            app:layout_constraintBottom_toTopOf="@id/emailBox"/>
+            app:layout_constraintBottom_toTopOf="@id/email"/>
 
         <EditText
-            android:id="@+id/emailBox"
+            android:id="@+id/email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -65,14 +65,14 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emailBox"
+            app:layout_constraintTop_toBottomOf="@id/email"
             app:layout_constraintBottom_toBottomOf="@id/dialogBox"
-            app:layout_constraintEnd_toStartOf="@id/btnReset"/>
+            app:layout_constraintEnd_toStartOf="@id/reset_button"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:id="@+id/btnReset"
+            android:id="@+id/reset_button"
             android:text="Reset"
             android:layout_marginStart="10dp"
             android:layout_marginBottom="8dp"

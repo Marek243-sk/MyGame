@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
@@ -51,10 +53,10 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(SignUpActivity.this, "Alright, signed up.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignUpActivity.this, "Alright, signed up.", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                             } else {
-                                Toast.makeText(SignUpActivity.this, "Something went wrong." + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignUpActivity.this, "Something went wrong." + Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });

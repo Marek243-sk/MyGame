@@ -14,16 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyGame"
         tools:targetApi="31">
+
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
 
         <activity
             android:name=".SignUpActivity"
             android:exported="true"
             android:screenOrientation="fullSensor">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN">
+                </action>
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -36,20 +39,30 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".GameOver"
             android:exported="true"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="fullSensor">
+        </activity>
+
         <activity
             android:name=".ScoreActivity"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".GameDetail"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".MainActivityAPI"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>
