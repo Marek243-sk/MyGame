@@ -3,6 +3,7 @@ package sk.tuke.mygame;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,14 +20,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivityAPI extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_view_api);
 
-        recyclerView = findViewById(R.id.recycler_view_api);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view_api);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -42,7 +42,7 @@ public class MainActivityAPI extends AppCompatActivity {
         Call<List<Post>> call = jsonPlaceholder.getPost();
         call.enqueue(new Callback<List<Post>>() {
             @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+            public void onResponse(@NonNull Call<List<Post>> call, @NonNull Response<List<Post>> response) {
                 if (!response.isSuccessful()) {
                     Toast.makeText(MainActivityAPI.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                     return;
@@ -52,7 +52,7 @@ public class MainActivityAPI extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Post>> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivityAPI.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
