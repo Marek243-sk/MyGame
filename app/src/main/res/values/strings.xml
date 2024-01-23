@@ -17,5 +17,9 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="sign_in_with_google">Sign in with Google.</string>
     <string name="break_it">Break it</string>
+    <string name="title">title</string>
+    <string name="id">id</string>
+    <string name="body">body</string>
+    <string name="user_id">user_id</string>
 
 </resources>
