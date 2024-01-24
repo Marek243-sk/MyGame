@@ -39,5 +39,12 @@ public class First extends AppCompatActivity {
             Intent intent = new Intent(First.this, MainActivityAPI.class);
             startActivity(intent);
         });
+
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) Button storage_button = findViewById(R.id.storage_button);
+
+        storage_button.setOnClickListener(v -> {
+            Intent intent = new Intent(First.this, Upload.class);
+            startActivity(intent);
+        });
     }
 }

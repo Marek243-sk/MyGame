@@ -9,5 +9,7 @@
         android:id="@+id/tv_points_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/points_details" />
+        android:text="@string/points_details"
+        android:textSize="20sp"
+        android:textColor="@color/text"/>
 </LinearLayout>
