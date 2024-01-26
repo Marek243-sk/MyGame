@@ -11,10 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+//    Adaptér pre RV na zobrazenie údajov z GameModel
 public class GameAdapter extends RecyclerView.Adapter<GameHolder> {
-
+//    Zoznam údaj na zobrazenie
     private List<GameModel> _data;
+//    Referencia na kontext aplikácie
     private WeakReference<Context> _context;
+//    Na zachytenie kliknutia, rozhranie
     private HandleClick _clickListener;
 
     public GameAdapter(List<GameModel> data, WeakReference<Context> contextWeakReference, HandleClick clickListener) {
@@ -23,10 +26,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameHolder> {
         _clickListener = clickListener;
     }
 
+//    Na obnovenie dát v adaptéri
     public void refreshData(List<GameModel> data) {
         _data = data;
         notifyDataSetChanged();
     }
+
+//    Vytvorenie novej položky v RV
     @NonNull
     @Override
     public GameHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,12 +40,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameHolder> {
         return new GameHolder(view);
     }
 
+//    Pridanie aktuálnych údajov k holderu
     @Override
     public void onBindViewHolder(@NonNull GameHolder holder, int position) {
-        //holder.points.setText(_data.get(position).points);
         GameModel currentItem = _data.get(position);
         holder.points.setText(String.valueOf(currentItem.points));
 
+//        Na zaznamenanie dotyku po položke v RV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +58,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameHolder> {
         });
     }
 
+//    Na získanie počtu položiek v RV
     @Override
     public int getItemCount() {
         if (_data != null) {

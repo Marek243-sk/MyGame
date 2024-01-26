@@ -7,9 +7,11 @@ import androidx.room.Query;
 
 import java.util.List;
 
+//    Rozhranie na prístup k databáze (Database Access Object)
 @Dao
 public interface GameDao {
 
+//    Dopyty na získanie všetký dát, podľa id, alebo zmazanie dát v DB Game
     @Query("SELECT * FROM Game")
     List<Game> getAll();
 

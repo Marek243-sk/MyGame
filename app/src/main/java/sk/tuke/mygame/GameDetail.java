@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class GameDetail extends AppCompatActivity implements HandleClick{
 
+//    Pole na zobrazenie počtu bodov
     TextView tvPointsDet;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,11 +16,8 @@ public class GameDetail extends AppCompatActivity implements HandleClick{
         setContentView(R.layout.activity_game_details);
 
         tvPointsDet = findViewById(R.id.tv_points_details);
-
+//        Získanie dát z predchádzajúcej aktivity cez intent
         Bundle bundle = getIntent().getExtras();
-        /*if (bundle != null) {
-            tvPointsDet.setText(String.valueOf(bundle.getInt("points")));
-        }*/
         if (bundle != null) {
             long gameId = bundle.getLong("gameId");
         }
