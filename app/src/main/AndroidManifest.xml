@@ -68,12 +68,6 @@
             android:exported="false">
         </activity>
 
-
-        <activity
-            android:name=".NewFileToStorage"
-            android:exported="false">
-        </activity>
-
     </application>
 
 </manifest>
