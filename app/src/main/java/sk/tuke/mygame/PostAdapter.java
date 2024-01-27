@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+//Adaptér na zobrazenie príspevkov v RV
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewholder> {
 
+//    Zoznam príspevkov
     List<Post> postList;
     Context context;
 
@@ -45,6 +47,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewholder
         return postList.size();
     }
 
+//    Na aktualizáciu zoznamu príspevkov, upozornenie adaptéra
+    @SuppressLint("NotifyDataSetChanged")
     public void setPosts(List<Post> posts) {
         postList = posts;
         notifyDataSetChanged();
