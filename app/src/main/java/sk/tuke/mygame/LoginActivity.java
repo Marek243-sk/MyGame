@@ -34,7 +34,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText emailLogin, passwordLogin;
     GoogleSignInButton buttonGoogle;
+//    Nastavenie pre prihlasovanie cez Google
     GoogleSignInOptions optionsGoogle;
+//    Klient pre prihlasovanie cez Google
     GoogleSignInClient clientGoogle;
 
     @Override
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+//        Inicializácia
         emailLogin = findViewById(R.id.email_login);
         passwordLogin = findViewById(R.id.password_login);
         TextView toSignUp = findViewById(R.id.to_signup);
@@ -49,16 +52,22 @@ public class LoginActivity extends AppCompatActivity {
         buttonGoogle = findViewById(R.id.button_google);
         auth = FirebaseAuth.getInstance();
 
+//        Čo sa deje pri stlačení na tlačidlo prihlásenia
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+//                Získanie hodnôt
                 String email = emailLogin.getText().toString();
                 String password = passwordLogin.getText().toString();
 
+//                Je email prázdny a má správny formát?
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//                    Je heslo prázdne
                     if (!password.isEmpty()) {
+//                        Prihlásenie pomocou Firebase autentifikácie
                         auth.signInWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//                            Úspech -> výpis hlášky a presmerovanie na novú aktivitu
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 Toast.makeText(LoginActivity.this, "Successfully logged in.", Toast.LENGTH_SHORT).show();
@@ -66,22 +75,27 @@ public class LoginActivity extends AppCompatActivity {
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
+//                            Neúspech -> zobrazenie chybovej hlášky
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(LoginActivity.this, "Failed to login.", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
-                        passwordLogin.setError("I would also fill that in...");
+//                        Ak je heslo prázdne
+                        passwordLogin.setError("I would fill that in...");
                     }
                 } else if (email.isEmpty()) {
+//                    Ak je email prázdny
                     emailLogin.setError("I would fill that in...");
                 } else {
+//                    Ak emial nemá správny formát
                     emailLogin.setError("Email is incorrect.");
                 }
             }
         });
 
+//        Na kliknutie pre Sign Up
         toSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,9 +103,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+//        Na prihlásenie cez Google
         optionsGoogle = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         clientGoogle = GoogleSignIn.getClient(this, optionsGoogle);
 
+//        Je užívateľ už prihlásený cez Google?
         GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
 
         if (googleSignInAccount != null) {
@@ -100,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+//        Spustenie Google prihlasovania
         ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult o) {
@@ -107,7 +124,9 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = o.getData();
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
                     try {
+//                        Získanie údajov o Google účte
                         task.getResult(ApiException.class);
+//                        OK == 1, ďalšia aktivita
                         finish();
                         Intent intent1 = new Intent(LoginActivity.this, First.class);
                         startActivity(intent1);
@@ -117,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-
+//        Kliknutie na Google tlačidlo
         buttonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
